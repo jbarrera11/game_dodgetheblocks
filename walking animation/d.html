@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<title> I'm me </title>
+	<head>
+
+<meta charset="UTF-8" />
+		<title>Phaser - Making your first game</title>
+		<script type="text/javascript" src="js/phaser.min.js"></script>
+		<style type="text/css">
+			body{
+				margin: 0;
+			}
+		</style>
+ 	</head>
+ 	<body>
+ 		
+ 		<script type="text/javascript">
+ 			
+ 			var game = new Phaser.Game(800,600,Phaser.CANVAS,'',{preload:preload, create:create, update:update});
+ 			var player,keyboard;
+ 			function preload(){
+ 				game.load.image("bg","image/ma.jpg");
+ 				game.load.spritesheet("jb","image/jb.png",64,127);
+ 			}
+
+ 			function create () {
+ 				game.add.sprite(0,0,"bg");
+ 			player = game.add.sprite(100,200,"jb");
+ 		
+
+ 			player.animations.add('walk-right',[1,2,3,4,5,6,7,8,9],5,true);
+
+ 			player.animations.add('walk-left',[11,12,13,14,15,16,17,18,19],5,true);
+ 			keyboard = game.input.keyboard.createCursorKeys();
+ 			}
+
+ 			function update() {
+ 				if(keyboard.right.isDown){
+ 				
+ 					player.animations.play('walk-right');
+ 					
+ 				}
+ 				else if(keyboard.left.isDown){
+ 					
+ 					player.animations.play('walk-left');
+ 				}
+
+ 				else{
+ 					player.animations.stop();
+ 				}
+
+ 			}
+ 			
+ 		</script>
+ 	</body>
+ </html>
+
+
+
+
+
