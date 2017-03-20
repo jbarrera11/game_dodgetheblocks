@@ -15,51 +15,51 @@
 <script type="text/javascript">
 var w = 800, h =600;
 var game = new Phaser.Game(w, h, Phaser.CANVAS, '', { preload: preload, create: create, update: update });
-var player, keyboard,mn;
+var player, keyboard,mn,gameText,scoreText,score = 0 ;
 
 function preload() {
     game.load.image("bg","image/back.jpg",0,0);
-    //game.load.image("bg1","img/bg.png");
+    
     game.load.image("mn","image/mn.png");
-    //game.load.image("platform","img/platform.png");
-   // game.load.spritesheet("bg-images","img/scenes-lava.png",1024,600);
+
     game.load.spritesheet("jb","image/jb.png",64,127);
+
+  
+
 }
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.add.sprite(0,0,"bg");
     player = game.add.sprite(300,430,"jb");
-    //player.scale.x = 2;
-    //player.scale.y = 2;
-    //platform = game.add.sprite(0,580,"platform");
+    
     player.animations.add('walk-right',[1,2,3,4,5,6,7,8,9],7,true);
     player.animations.add('walk-left',[11,12,13,14,15,16,17,18,19],7,true);
     keyboard = game.input.keyboard.createCursorKeys();
     createMns(1000);
     mn = game.add.group();
     mn.enableBody = true;
-    //game.physics.arcade.enable(platform);
-   // platform.body.immovable = true;
-   // platform.scale.x = 2;
+   
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
-    // player.body.gravity.y = 1000;
-    // player.body.bounce.y = 0.2
+
+    gameText = game.add.text(350,300,"",{fill:"white"});
+    scoreText = game.add.text(w-200,20,"score: ",{fill:"white"});
+
+   
 }
-// var x = 0;
+
 function update() {
     game.physics.arcade.collide(mn,player);
-    //game.physics.arcade.collide(player,platform);
+   
     game.physics.arcade.overlap(player,mn,killJb);
     if(keyboard.left.isDown){
-        //x++;
+       
         player.animations.play("walk-left");
         player.body.velocity.x = -500;
-        // back.frame = 0;
+       
     }
     else if(keyboard.right.isDown){
-       // x--;
-      // back.frame = 1;
+      
         player.animations.play("walk-right");
         player.body.velocity.x = 500;
     }
@@ -76,15 +76,18 @@ function createMns(time){
        mns = mn.create(Math.random()*w,0,"mn");
         mns.body.gravity.y = 3000;
         var scale = Math.random();
-        mns.scale.y = scale*2; //size ng blocks
-        mns.scale.x = scale*2;
-      //  mn.body.bounce.y = 0.2;
-       // mn.body.collideWorldBounds = true;
+        mns.scale.y = scale*0.2; //size ng blocks
+        mns.scale.x = scale*0.2;
+        
     },time);
 }
 function killJb(player,mn){
     player.kill();
-}
+    gameText.text = 'GAME OVER';
+    game._pause = true;
+
+  }
+
 </script>
 
 </body>
